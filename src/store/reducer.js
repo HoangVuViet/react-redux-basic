@@ -1,7 +1,14 @@
-import { INCREMENT, DECREMENT, ADD, SUB } from '../constants/actionTypes';
+import {
+  INCREMENT,
+  DECREMENT,
+  ADD,
+  SUB,
+  STORE_RESULT,
+  DELETE_RESULT,
+} from '../constants/actionTypes';
 const initialState = {
   counter: 0,
-  result: [],
+  results: [],
 };
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -13,6 +20,20 @@ const reducer = (state = initialState, action) => {
       return { ...state, counter: state.counter + action.value };
     case SUB:
       return { ...state, counter: state.counter - action.value };
+    case STORE_RESULT:
+      return {
+        ...state,
+        results: state.results.concat({ id: new Date(), value: state.counter }),
+      };
+    case DELETE_RESULT:
+      const newResults = state.results.filter(
+        (result) => result.id !== action.resultElId
+      );
+      return {
+        ...state,
+        results: [...newResults],
+      };
+      break;
     default:
       return state;
   }
