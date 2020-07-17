@@ -1,14 +1,19 @@
 const { createStore } = require('redux');
-// Actions
+// State
+const initialState = [{ name: '', age: 0, job: '' }];
+// Actions Creators
 const ADD_USER = (payload) => {
-  return { type: 'ADD_USER', payload: payload };
+  return { type: 'ADD_USER', payload: payload }; //Action : { type: 'ADD_USER', name: 'Hoang Vu', age: 20, job: 'Student' }
 };
 const UPDATE_USER = (payload) => {
-  return { type: 'UPDATE_USER', payload: payload };
+  return { type: 'UPDATE_USER', payload: payload }; //Action: { type: 'UPDATE_USER', name: 'Hoang Vu', age: 20, job: 'Student' };
 };
-//Reducers
+const DELETE_USER = (id) => {
+  return { type: 'DELETE_USER', id: id }; //Action: { type: 'DELETE_USER', id:2 };
+};
+//root Reducers
 let id = 1;
-const user = (state, action) => {
+const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_USER':
       return [
@@ -33,19 +38,21 @@ const user = (state, action) => {
           };
         }
       });
+    case 'DELETE_USER':
+      return state.filter((user) => user.id !== action.id);
     default:
       return state;
   }
 };
 //Store
-const store = createStore(user, []);
-console.log(store.getState());
+const store = createStore(rootReducer, []);
+// Subcription
 store.subscribe(() => {
-  console.log(store.getState());
+  console.log('Subcription', store.getState());
 });
+// Dispatching Action
 store.dispatch(ADD_USER({ name: 'Hoang Vu', age: 20, job: 'Student' }));
 store.dispatch(ADD_USER({ name: 'Hoang', age: 22, job: 'Intern' }));
 store.dispatch(ADD_USER({ name: 'Vu', age: 25, job: 'Dev' }));
-store.dispatch(
-  UPDATE_USER({ id: 2, name: 'Vu Viet', age: 24, job: 'Student' })
-);
+store.dispatch(UPDATE_USER({ id: 2, name: 'Vu Viet', age: 24, job: 'Gamer' }));
+store.dispatch(DELETE_USER(2));
