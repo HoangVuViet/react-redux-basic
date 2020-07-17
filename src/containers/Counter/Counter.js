@@ -26,7 +26,7 @@ class Counter extends Component {
             return (
               <li
                 key={result.id}
-                onClick={this.props.onDeleteResult(result.id)}
+                onClick={this.props.onDeleteResult.bind(this, result.id)}
               >
                 {result.value}
               </li>
