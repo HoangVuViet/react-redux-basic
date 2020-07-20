@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import CounterControl from '../../components/CounterControl/CounterControl';
+import './Counter.css'
 import CounterOutput from '../../components/CounterOutput/CounterOutput';
 import {
   INCREMENT,
@@ -20,11 +21,11 @@ class Counter extends Component {
         <CounterControl label="Add 5" clicked={this.props.onAdd} />
         <CounterControl label="Subtract 5" clicked={this.props.onSub} />
         <hr />
-        <button
+        <div className="Button"
           onClick={this.props.onStoreResult.bind(this, this.props.ctr.counter)}
         >
           Store Result
-        </button>
+        </div>
         <ul>
           {this.props.res.results.map((result) => {
             return (
