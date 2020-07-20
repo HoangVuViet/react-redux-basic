@@ -8,7 +8,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         results: state.results.concat({
-          id: new Date(),
+          id: Math.floor(Math.random() * 10000),
           value: action.result,
         }),
       };
